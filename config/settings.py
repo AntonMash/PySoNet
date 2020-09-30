@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
 from pathlib import Path
+# from rest_framework.compat import URLPattern, URLResolver, get_original_route
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,8 @@ SECRET_KEY = '5%g54%_3n%9uht84g-zo8+ls&!ifj7%9*h*g$98u-!pxz)kdpf'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
+    'corsheaders',
 
     'src.profiles',
 ]
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'config.urls'
 
@@ -140,15 +145,30 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    #  'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    #
-    # ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    # 'DEFAULT_GENERATOR_CLASS': (
+    #     'drf_yasg.generators.OpenAPISchemaGenerator',),
 
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    # ]
 }
-# SIMPLE_JWT = {
-#    # 'AUTH_HEADER_TYPES': ('JWT',),
+SIMPLE_JWT = {
+    # 'AUTH_HEADER_TYPES': ('JWT',),
+}
+
+AUTH_USER_MODEL = 'profiles.UserNet'
+
+# SWAGGER_SETTINGS = {
+#     # 'DEFAULT_AUTO_SCHEMA_CLASS': (
+#     #     'apps.api.inspectors.SwaggerAutoSchema',),
+#     'DEFAULT_GENERATOR_CLASS': (
+#         'drf_yasg.generators.OpenAPISchemaGenerator',),
 # }
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8080",
+    "http://localhost:8081",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:1313",
+    "http://localhost:1313",
+]
