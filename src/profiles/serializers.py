@@ -5,6 +5,7 @@ from .models import UserNet
 
 class GetUserNetSerializer(serializers.ModelSerializer):
     """ Вывод инфо о User"""
+    avatar = serializers.ImageField(read_only=True)
 
     class Meta:
         model = UserNet
